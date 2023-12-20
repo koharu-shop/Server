@@ -1,12 +1,14 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
-@Controller('api/user')
+@Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Post()
-  getHello(): string {
-    return 'hi';
+  @UseGuards(JwtGuard)
+  @Get(':email')
+  async getUserProfile(@Param('email') email: string) {
+    return await this.userService.findByEmail(email);
   }
 }
