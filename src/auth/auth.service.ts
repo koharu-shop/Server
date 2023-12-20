@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 import { UserService } from 'src/user/user.service';
 import { LoginDto } from './dto/auth.dto';
 
+const EXPIRE_TIME = 20 * 1000;
 @Injectable()
 export class AuthService {
   constructor(
@@ -39,7 +40,27 @@ export class AuthService {
           expiresIn: '7d',
           secret: process.env.JWT_REFRESH_TOKEN_KEY!,
         }),
+        expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
       },
+    };
+  }
+
+  async refreshToken(user: any) {
+    const payload = {
+      username: user.username,
+      sub: user.sub,
+    };
+
+    return {
+      accessToken: await this.jwtService.signAsync(payload, {
+        expiresIn: '1h',
+        secret: process.env.JWT_SECRET_KEY,
+      }),
+      refreshToken: await this.jwtService.signAsync(payload, {
+        expiresIn: '7d',
+        secret: process.env.JWT_REFRESH_TOKEN_KEY,
+      }),
+      expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
     };
   }
 }
