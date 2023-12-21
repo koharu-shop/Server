@@ -14,15 +14,17 @@ export class AuthService {
   ) {}
 
   async login(dto: LoginDto) {
-    const user = await this.prismaService.user.findUnique({
+    let user = await this.prismaService.user.findUnique({
       where: {
         email: dto.email,
       },
     });
 
     if (!user) {
-      await this.userService.create(dto);
+      user = await this.userService.create(dto);
     }
+
+    console.log(user, 'user');
 
     const payload = {
       id: user.id,
@@ -33,7 +35,7 @@ export class AuthService {
     return {
       backendTokens: {
         accessToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '1h',
+          expiresIn: '20s',
           secret: process.env.JWT_SECRET_KEY!,
         }),
         refreshToken: await this.jwtService.signAsync(payload, {
@@ -46,6 +48,7 @@ export class AuthService {
   }
 
   async refreshToken(user: any) {
+    console.log(user);
     const payload = {
       username: user.username,
       sub: user.sub,
@@ -53,7 +56,7 @@ export class AuthService {
 
     return {
       accessToken: await this.jwtService.signAsync(payload, {
-        expiresIn: '1h',
+        expiresIn: '20s',
         secret: process.env.JWT_SECRET_KEY,
       }),
       refreshToken: await this.jwtService.signAsync(payload, {
