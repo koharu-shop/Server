@@ -10,7 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+enum Role {
+  G
+  Admin
+}
 model User {
   id    Int     @default(autoincrement()) @id
   email String  @unique
@@ -19,5 +22,6 @@ model User {
   phone String?
   addr String?
   point Int @default(0)
+  role Role @default(G)
   createdAt DateTime @default(now())
 }
