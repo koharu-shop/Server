@@ -10,18 +10,131 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  G
+enum YNEnum {
+  Y
+  N
+}
+
+enum AuthEnum {
   Admin
 }
-model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name String
-  image String
-  phone String?
-  addr String?
-  point Int @default(0)
-  role Role @default(G)
+
+// 고객 정보
+model Customer {
+  customerId  Int      @id @default(autoincrement())
+  email       String   @unique
+  name        String
+  image       String
+  phoneNumber String?
+  point       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  Addresses Address[] // 일대다 관계
+  Carts     Cart[]
+  Orders    Order[]
+}
+
+// 고객 배송지 정보
+model Address {
+  addressId Int @id @default(autoincrement())
+
+  customerId Int
+  Customer   Customer @relation(fields: [customerId], references: [customerId])
+
+  name            String
+  address         String
+  addressDetail   String
+  zipCode         String
+  phoneNumber     String
+  default         YNEnum
+  deliveryRequest String?
+}
+
+// 장바구니
+model Cart {
+  cartId Int @id @default(autoincrement())
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [productId])
+
+  customerId Int
+  Customer   Customer @relation(fields: [customerId], references: [customerId])
+
+  count     Int
   createdAt DateTime @default(now())
+}
+
+// 카테고리
+model Category {
+  categoryId  Int    @id @default(autoincrement())
+  name        String
+  description String
+
+  Products Product[]
+}
+
+// 상품
+model Product {
+  productId Int @id @default(autoincrement())
+
+  categoryId Int
+  Category   Category @relation(fields: [categoryId], references: [categoryId])
+
+  name        String
+  description String
+  price       Int
+  sale        Int
+  createdAt   DateTime @default(now())
+  count       Int
+  deleted     YNEnum
+  image1      String?
+  image2      String?
+  image3      String?
+  image4      String?
+  image5      String?
+
+  Carts        Cart[]
+  OrderDetails OrderDetail[]
+}
+
+// 주문
+model Order {
+  orderId Int @id @default(autoincrement())
+
+  customerId Int
+  Customer   Customer @relation(fields: [customerId], references: [customerId])
+
+  orderDate       DateTime @default(now())
+  address         String
+  addressDetail   String
+  zipCode         String
+  phoneNumber     String
+  customerName    String
+  deliveryRequest String?
+  status          YNEnum
+  totalAmount     Int
+
+  orderDetails OrderDetail[]
+}
+
+// 주문 상세
+model OrderDetail {
+  orderDetailId Int @id @default(autoincrement())
+
+  orderId Int
+  Order   Order @relation(fields: [orderId], references: [orderId])
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [productId])
+
+  price Int
+  count Int
+}
+
+// 관리자
+model Admin {
+  adminId Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String
+  auth    AuthEnum
 }
