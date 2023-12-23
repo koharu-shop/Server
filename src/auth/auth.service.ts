@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   async login(dto: LoginDto) {
-    const user = await this.prismaService.user.findUnique({
+    const user = await this.prismaService.customer.findUnique({
       where: {
         email: dto.email,
       },
@@ -25,7 +25,7 @@ export class AuthService {
     }
 
     const payload: JwtPayload = {
-      id: user.id,
+      id: user.customerId,
       email: user.email,
       name: user.name,
     };
