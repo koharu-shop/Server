@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
 import { UserService } from 'src/user/user.service';
@@ -50,9 +50,29 @@ export class AuthService {
     };
   }
 
-  // async refreshToken(payload: JwtPayload) {
-  //   return {
-  //     accessToken: this.jwtService.signAsync(payload),
-  //   };
-  // }
+  async refreshToken(refreshToken: string) {
+    // Verify refresh token
+    // JWT Refresh Token 검증 로직
+    const decodedRefreshToken = this.jwtService.verify(refreshToken, { secret: process.env.JWT_REFRESH_TOKEN_KEY! });
+
+    const { id, email, name, role } = decodedRefreshToken;
+
+    const payload: JwtPayload = {
+      id,
+      email,
+      name,
+      role,
+    };
+
+    if (payload) {
+      return {
+        accessToken: await this.jwtService.signAsync(payload, {
+          expiresIn: '1h',
+          secret: process.env.JWT_SECRET_KEY!,
+        }),
+      };
+    }
+
+    throw new UnauthorizedException();
+  }
 }

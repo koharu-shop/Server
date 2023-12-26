@@ -17,7 +17,7 @@ export class JwtGuard implements CanActivate {
       });
       request['user'] = payload;
     } catch {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('토큰 만료');
     }
 
     return true;
