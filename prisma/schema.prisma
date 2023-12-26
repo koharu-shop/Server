@@ -21,7 +21,7 @@ enum AuthEnum {
 
 // 고객 정보
 model Customer {
-  customerId  Int      @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   email       String   @unique
   name        String
   image       String
@@ -36,10 +36,10 @@ model Customer {
 
 // 고객 배송지 정보
 model Address {
-  addressId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   customerId Int
-  Customer   Customer @relation(fields: [customerId], references: [customerId])
+  Customer   Customer @relation(fields: [customerId], references: [id])
 
   name            String
   address         String
@@ -52,13 +52,13 @@ model Address {
 
 // 장바구니
 model Cart {
-  cartId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   productId Int
-  Product   Product @relation(fields: [productId], references: [productId])
+  Product   Product @relation(fields: [productId], references: [id])
 
   customerId Int
-  Customer   Customer @relation(fields: [customerId], references: [customerId])
+  Customer   Customer @relation(fields: [customerId], references: [id])
 
   count     Int
   createdAt DateTime @default(now())
@@ -66,7 +66,7 @@ model Cart {
 
 // 카테고리
 model Category {
-  categoryId  Int     @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   description String?
 
@@ -75,10 +75,10 @@ model Category {
 
 // 상품
 model Product {
-  productId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   categoryId Int
-  Category   Category @relation(fields: [categoryId], references: [categoryId])
+  Category   Category @relation(fields: [categoryId], references: [id])
 
   name        String
   description String
@@ -99,10 +99,10 @@ model Product {
 
 // 주문
 model Order {
-  orderId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   customerId Int
-  Customer   Customer @relation(fields: [customerId], references: [customerId])
+  Customer   Customer @relation(fields: [customerId], references: [id])
 
   orderDate       DateTime @default(now())
   address         String
@@ -119,13 +119,13 @@ model Order {
 
 // 주문 상세
 model OrderDetail {
-  orderDetailId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   orderId Int
-  Order   Order @relation(fields: [orderId], references: [orderId])
+  Order   Order @relation(fields: [orderId], references: [id])
 
   productId Int
-  Product   Product @relation(fields: [productId], references: [productId])
+  Product   Product @relation(fields: [productId], references: [id])
 
   price Int
   count Int
@@ -133,8 +133,8 @@ model OrderDetail {
 
 // 관리자
 model Admin {
-  adminId Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String
-  auth    AuthEnum
+  id    Int      @id @default(autoincrement())
+  email String   @unique
+  name  String
+  auth  AuthEnum
 }
