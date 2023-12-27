@@ -15,4 +15,10 @@ export class ProductService {
 
     return newCategory;
   }
+
+  async getCategory() {
+    const category = await this.prismaService.category.findMany();
+
+    return category;
+  }
 }
