@@ -66,9 +66,8 @@ model Cart {
 
 // 카테고리
 model Category {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
+  id   Int    @id @default(autoincrement())
+  name String
 
   Products Product[]
 }
