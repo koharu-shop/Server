@@ -24,6 +24,12 @@ export class UploadsController {
   )
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
     console.log(files);
-    return files;
+    const fileResponses = files.map(file => {
+      return {
+        originalname: file.originalname,
+        path: `/uploads/${file.filename}`,
+      };
+    });
+    return fileResponses;
   }
 }
