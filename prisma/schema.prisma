@@ -84,6 +84,7 @@ model Product {
   price       Int
   sale        Int
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   count       Int
   deleted     YNEnum
   image1      String?
