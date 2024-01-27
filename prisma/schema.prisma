@@ -15,18 +15,21 @@ enum YNEnum {
   N
 }
 
-enum AuthEnum {
+enum RoleEnum {
   Admin
+  User
 }
 
 // 고객 정보
-model Customer {
+model Member {
   id          Int      @id @default(autoincrement())
   email       String   @unique
   name        String
   image       String
   phoneNumber String?
   point       Int      @default(0)
+  birth       String?
+  role        RoleEnum @default(User)
   createdAt   DateTime @default(now())
 
   Addresses Address[] // 일대다 관계
@@ -38,36 +41,24 @@ model Customer {
 model Address {
   id Int @id @default(autoincrement())
 
-  customerId Int
-  Customer   Customer @relation(fields: [customerId], references: [id])
+  memberId Int
+  Member   Member @relation(fields: [memberId], references: [id])
 
   name            String
   address         String
   addressDetail   String
   zipCode         String
   phoneNumber     String
-  default         YNEnum
+  default         YNEnum  @default(N)
   deliveryRequest String?
-}
-
-// 장바구니
-model Cart {
-  id Int @id @default(autoincrement())
-
-  productId Int
-  Product   Product @relation(fields: [productId], references: [id])
-
-  customerId Int
-  Customer   Customer @relation(fields: [customerId], references: [id])
-
-  count     Int
-  createdAt DateTime @default(now())
 }
 
 // 카테고리
 model Category {
-  id   Int    @id @default(autoincrement())
-  name String
+  id      Int    @id @default(autoincrement())
+  name    String
+  engName String
+  use     YNEnum @default(Y)
 
   Products Product[]
 }
@@ -79,30 +70,69 @@ model Product {
   categoryId Int
   Category   Category @relation(fields: [categoryId], references: [id])
 
-  name        String
-  description String
-  price       Int
-  sale        Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  count       Int
-  deleted     YNEnum
-  image1      String?
-  image2      String?
-  image3      String?
-  image4      String?
-  image5      String?
+  name          String
+  content       String
+  price         Int
+  sale          Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  count         Int
+  deleted       YNEnum   @default(N)
+  image1        String
+  image2        String?
+  image3        String?
+  image4        String?
+  image5        String?
+  seoTitle      String
+  buyMinCount   Int      @default(0)
+  buyMaxCount   Int      @default(0)
+  use           YNEnum   @default(Y)
+  type1         YNEnum   @default(N) // 추천상품
+  type2         YNEnum   @default(N) // 신상품
+  type3         YNEnum   @default(N) // 인기상품
+  type4         YNEnum   @default(N) // 할인상품
+  optionSubject String // 상품 옵션 ","로 구분
+  supplySubject String // 상품 옵션 ","로 구분
 
-  Carts        Cart[]
-  OrderDetails OrderDetail[]
+  Carts          Cart[]
+  OrderDetails   OrderDetail[]
+  ProductOptions ProductOption[]
+}
+
+// 상품옵션
+model ProductOption {
+  id Int @id @default(autoincrement())
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+
+  count Int
+  price Int // 추가 가격
+  type  Int    @default(0) // 0 = 기분옵션, 1 = 추가옵션
+  use   YNEnum @default(Y)
+  name  String // ASCII코드 30으로 구분
+}
+
+// 장바구니
+model Cart {
+  id Int @id @default(autoincrement())
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+
+  memberId Int
+  Member   Member @relation(fields: [memberId], references: [id])
+
+  count     Int
+  createdAt DateTime @default(now())
 }
 
 // 주문
 model Order {
   id Int @id @default(autoincrement())
 
-  customerId Int
-  Customer   Customer @relation(fields: [customerId], references: [id])
+  memberId Int
+  Member   Member @relation(fields: [memberId], references: [id])
 
   orderDate       DateTime @default(now())
   address         String
@@ -129,12 +159,4 @@ model OrderDetail {
 
   price Int
   count Int
-}
-
-// 관리자
-model Admin {
-  id    Int      @id @default(autoincrement())
-  email String   @unique
-  name  String
-  auth  AuthEnum
 }
