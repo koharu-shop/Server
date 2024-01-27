@@ -16,8 +16,8 @@ enum YNEnum {
 }
 
 enum RoleEnum {
-  Admin
-  User
+  ADMIN
+  USER
 }
 
 // 고객 정보
@@ -29,7 +29,7 @@ model Member {
   phoneNumber String?
   point       Int      @default(0)
   birth       String?
-  role        RoleEnum @default(User)
+  role        RoleEnum @default(USER)
   createdAt   DateTime @default(now())
 
   Addresses Address[] // 일대다 관계
