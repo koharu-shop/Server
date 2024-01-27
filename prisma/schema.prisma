@@ -55,10 +55,11 @@ model Address {
 
 // 카테고리
 model Category {
-  id      Int    @id @default(autoincrement())
-  name    String
-  engName String
-  use     YNEnum @default(Y)
+  id            Int    @id @default(autoincrement())
+  name          String @unique
+  engName       String @unique
+  displayOption YNEnum @default(Y)
+  order         Int
 
   Products Product[]
 }
@@ -86,7 +87,7 @@ model Product {
   seoTitle      String
   buyMinCount   Int      @default(0)
   buyMaxCount   Int      @default(0)
-  use           YNEnum   @default(Y)
+  displayOption YNEnum   @default(Y)
   type1         YNEnum   @default(N) // 추천상품
   type2         YNEnum   @default(N) // 신상품
   type3         YNEnum   @default(N) // 인기상품
@@ -106,11 +107,11 @@ model ProductOption {
   productId Int
   Product   Product @relation(fields: [productId], references: [id])
 
-  count Int
-  price Int // 추가 가격
-  type  Int    @default(0) // 0 = 기분옵션, 1 = 추가옵션
-  use   YNEnum @default(Y)
-  name  String // ASCII코드 30으로 구분
+  count         Int
+  price         Int // 추가 가격
+  type          Int    @default(0) // 0 = 기분옵션, 1 = 추가옵션
+  displayOption YNEnum @default(Y)
+  name          String // ASCII코드 30으로 구분
 }
 
 // 장바구니
