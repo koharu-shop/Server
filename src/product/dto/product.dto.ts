@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateCategoryDto {
   @IsString()
@@ -8,5 +8,8 @@ export class CreateCategoryDto {
   engName: string;
 
   @IsString()
-  use: 'Y' | 'N';
+  displayOption: 'Y' | 'N';
+
+  @IsNumber()
+  order: number;
 }
