@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   async login(dto: LoginDto) {
-    let user = await this.prismaService.customer.findUnique({
+    let user = await this.prismaService.member.findUnique({
       where: {
         email: dto.email,
       },
@@ -24,17 +24,11 @@ export class AuthService {
       user = await this.userService.create(dto);
     }
 
-    const admin = await this.prismaService.admin.findUnique({
-      where: {
-        email: dto.email,
-      },
-    });
-
     const payload: JwtPayload = {
       id: user.id,
       email: user.email,
       name: user.name,
-      role: admin ? 'admin' : 'user',
+      role: user.role,
     };
 
     return {
@@ -46,7 +40,7 @@ export class AuthService {
         expiresIn: '7d',
         secret: process.env.JWT_REFRESH_TOKEN_KEY!,
       }),
-      role: admin ? 'admin' : 'user',
+      role: user.role,
     };
   }
 

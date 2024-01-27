@@ -14,7 +14,7 @@ export class AdminController {
   ) {}
 
   private checkAdminRole(@Request() req) {
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'ADMIN') {
       throw new UnauthorizedException();
     }
   }

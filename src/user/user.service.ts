@@ -7,7 +7,7 @@ export class UserService {
   constructor(private prismaService: PrismaService) {}
 
   async create(dto: LoginDto) {
-    const newUser = await this.prismaService.customer.create({
+    const newUser = await this.prismaService.member.create({
       data: {
         ...dto,
       },
@@ -16,7 +16,7 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    return await this.prismaService.customer.findUnique({
+    return await this.prismaService.member.findUnique({
       where: {
         email: email,
       },
@@ -24,6 +24,6 @@ export class UserService {
   }
 
   async getAllUser() {
-    return await this.prismaService.customer.findMany();
+    return await this.prismaService.member.findMany();
   }
 }
