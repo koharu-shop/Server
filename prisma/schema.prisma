@@ -78,12 +78,12 @@ model Product {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   count         Int
-  deleted       YNEnum   @default(N)
-  image1        String
-  image2        String?
-  image3        String?
-  image4        String?
-  image5        String?
+  deleted       YNEnum?  @default(N)
+  img1          String
+  img2          String?
+  img3          String?
+  img4          String?
+  img5          String?
   seoTitle      String
   buyMinCount   Int      @default(0)
   buyMaxCount   Int      @default(0)
@@ -92,8 +92,8 @@ model Product {
   type2         YNEnum   @default(N) // 신상품
   type3         YNEnum   @default(N) // 인기상품
   type4         YNEnum   @default(N) // 할인상품
-  optionSubject String // 상품 옵션 ","로 구분
-  supplySubject String // 상품 옵션 ","로 구분
+  optionSubject String? // 상품 옵션 ","로 구분
+  supplySubject String? // 상품 옵션 ","로 구분
 
   Carts          Cart[]
   OrderDetails   OrderDetail[]
