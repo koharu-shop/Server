@@ -72,7 +72,7 @@ model Product {
   Category   Category @relation(fields: [categoryId], references: [id])
 
   name          String
-  content       String
+  content       String   @db.MediumText
   price         Int
   sale          Int
   createdAt     DateTime @default(now())
