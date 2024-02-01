@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards, Request, UnauthorizedException, Logger } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import { CreateCategoryDto } from 'src/admin/dto/product.dto';
+import { CreateCategoryDto, CreateProductDto } from 'src/admin/dto/product.dto';
 import { UserService } from 'src/user/user.service';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
@@ -21,7 +21,7 @@ export class AdminController {
 
   @UseGuards(JwtGuard)
   @Post('category')
-  create(@Body() createCategoryDto: CreateCategoryDto, @Request() req) {
+  addCategory(@Body() createCategoryDto: CreateCategoryDto, @Request() req) {
     this.checkAdminRole(req);
     this.logger.verbose(`카테고리 ${createCategoryDto.name} 항목 생성`);
     return this.adminService.addCategory(createCategoryDto);
@@ -32,5 +32,13 @@ export class AdminController {
   getAllUser(@Request() req) {
     this.checkAdminRole(req);
     return this.userService.getAllUser();
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('product')
+  addProduct(@Body() createProductDto: CreateProductDto, @Request() req) {
+    this.checkAdminRole(req);
+    this.logger.verbose(`상품 ${createProductDto.name} 항목 생성`);
+    return this.adminService.addProduct(createProductDto);
   }
 }
