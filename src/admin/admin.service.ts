@@ -47,10 +47,7 @@ export class AdminService {
         });
       });
 
-      // 기다려야 하는 모든 비동기 작업이 완료될 때까지 대기
       await Promise.all(promises);
-
-      // return newProductOption;
     } catch (error) {
       throw new Error(error);
     }

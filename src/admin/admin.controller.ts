@@ -37,7 +37,6 @@ export class AdminController {
   @UseGuards(JwtGuard)
   @Post('product')
   addProduct(@Body() createProductDto: CreateProductDto, @Request() req) {
-    console.log(createProductDto);
     this.checkAdminRole(req);
     this.logger.verbose(`상품 ${createProductDto.name} 항목 생성`);
     return this.adminService.addProduct(createProductDto);
@@ -47,8 +46,7 @@ export class AdminController {
   @Post('productOption')
   addProductOption(@Body() createProductOptionDto: CreateProductOptionDto[], @Request() req) {
     this.checkAdminRole(req);
-    // console.log(createProductOptionDto);
-    // this.logger.verbose(`상품 ${createProductOptionDto.name} 항목 생성`);
-    // return this.adminService.addProductOption(createProductOptionDto);
+    this.logger.verbose('상품 옵션 생성');
+    return this.adminService.addProductOption(createProductOptionDto);
   }
 }
