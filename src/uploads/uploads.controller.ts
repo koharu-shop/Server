@@ -23,7 +23,6 @@ export class UploadsController {
     }),
   )
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
-    console.log(files);
     const fileResponses = files.map(file => {
       return {
         originalname: file.originalname,

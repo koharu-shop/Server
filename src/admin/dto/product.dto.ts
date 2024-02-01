@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsOptional, IsInt, IsBoolean } from 'class-validator';
+import { IsNumber, IsString, IsOptional, IsInt } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 type YNEnum = 'Y' | 'N';
