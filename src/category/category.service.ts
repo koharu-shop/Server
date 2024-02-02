@@ -10,7 +10,7 @@ export class CategoryService {
   }
 
   async getProducts(id: number) {
-    const product = await this.prismaService.product.findMany({
+    const products = await this.prismaService.product.findMany({
       where: {
         categoryId: id,
       },
@@ -20,8 +20,9 @@ export class CategoryService {
         img1: true,
         price: true,
         sale: true,
+        type4: true,
       },
     });
-    return product;
+    return products;
   }
 }
