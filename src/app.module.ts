@@ -8,6 +8,7 @@ import { ProductModule } from './product/product.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { join } from 'path';
     AdminModule,
     ProductModule,
     UploadsModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
