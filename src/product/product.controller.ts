@@ -4,8 +4,8 @@ import { ProductService } from './product.service';
 @Controller('product')
 export class ProductController {
   constructor(private productService: ProductService) {}
-  @Get('/category')
-  getCategory() {
-    return this.productService.getCategory();
+  @Get('/categories')
+  getCategories() {
+    return this.productService.getCategories();
   }
 }
