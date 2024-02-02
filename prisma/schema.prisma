@@ -57,7 +57,6 @@ model Address {
 model Category {
   id            Int    @id @default(autoincrement())
   name          String @unique
-  engName       String @unique
   displayOption YNEnum @default(Y)
   order         Int
 
