@@ -5,9 +5,9 @@ import { PrismaService } from 'src/prisma.service';
 export class ProductService {
   constructor(private prismaService: PrismaService) {}
 
-  async getCategory() {
-    const category = await this.prismaService.category.findMany();
+  async getCategories() {
+    const categories = await this.prismaService.category.findMany();
 
-    return category;
+    return categories;
   }
 }
