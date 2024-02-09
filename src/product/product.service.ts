@@ -10,7 +10,9 @@ export class ProductService {
       where: { id: id },
     });
 
-    const images = [product.img1, product.img2, product.img3, product.img4, product.img5].filter(img => img);
+    const images = [product.img1, product.img2, product.img3, product.img4, product.img5, product.img6].filter(
+      img => img,
+    );
 
     // 이미지들을 images 배열로 교체
     const productWithImages = {
@@ -24,6 +26,7 @@ export class ProductService {
     delete productWithImages.img3;
     delete productWithImages.img4;
     delete productWithImages.img5;
+    delete productWithImages.img6;
 
     return productWithImages;
   }
