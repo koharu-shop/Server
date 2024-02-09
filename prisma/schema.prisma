@@ -83,6 +83,7 @@ model Product {
   img3          String?
   img4          String?
   img5          String?
+  img6          String?
   seoTitle      String
   buyMinCount   Int      @default(0)
   buyMaxCount   Int      @default(0)
