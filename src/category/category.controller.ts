@@ -1,8 +1,10 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Logger, Param } from '@nestjs/common';
 import { CategoryService } from './category.service';
 
 @Controller('category')
 export class CategoryController {
+  private logger = new Logger('AdminController');
+
   constructor(private categoryService: CategoryService) {}
 
   @Get(':id')
@@ -12,6 +14,7 @@ export class CategoryController {
 
   @Get()
   getCategories() {
+    this.logger.verbose('get categories');
     return this.categoryService.getCategories();
   }
 }
