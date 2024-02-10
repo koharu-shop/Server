@@ -41,13 +41,11 @@ export class AdminService {
 
   async addProductOption(dto: CreateProductOptionDto[]) {
     try {
-      const promises = dto.map(async item => {
+      for (const item of dto) {
         await this.prismaService.productOption.create({
           data: { ...item },
         });
-      });
-
-      await Promise.all(promises);
+      }
     } catch (error) {
       throw new Error(error);
     }
