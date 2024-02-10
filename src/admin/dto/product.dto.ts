@@ -8,9 +8,6 @@ export class CreateCategoryDto {
   name: string;
 
   @IsString()
-  engName: string;
-
-  @IsString()
   displayOption: YNEnum;
 
   @IsNumber()
