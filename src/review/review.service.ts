@@ -6,10 +6,10 @@ import { CreateReviewDto } from './dto/review.dto';
 export class ReviewService {
   constructor(private prismaService: PrismaService) {}
 
-  async addReview(dto: CreateReviewDto) {
+  async addReview(dto: CreateReviewDto, userId: number) {
     try {
       const newReview = await this.prismaService.review.create({
-        data: { ...dto },
+        data: { ...dto, memberId: userId },
       });
 
       return newReview;

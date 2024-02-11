@@ -12,9 +12,9 @@ export class ReviewController {
   @UseGuards(JwtGuard)
   @Post()
   addReview(@Body() createReviewDto: CreateReviewDto, @Request() req) {
-    console.log(req);
+    const userId = req.user.id;
     this.logger.verbose('리뷰 생성');
-    return this.reviewService.addReview(createReviewDto);
+    return this.reviewService.addReview(createReviewDto, userId);
   }
 
   @Get(':id')

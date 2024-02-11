@@ -4,15 +4,8 @@ export class CreateReviewDto {
   @IsNumber()
   productId: number;
 
-  @IsNumber()
-  memberId: number;
-
   @IsString()
-  subject: string;
-
-  @IsOptional()
-  @IsString()
-  content?: string;
+  content: string;
 
   @IsNumber()
   score: number;
