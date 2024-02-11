@@ -126,8 +126,7 @@ model Review {
   Member   Member @relation(fields: [memberId], references: [id])
 
   score     Int
-  subject   String
-  content   String?
+  content   String
   img1      String?
   img2      String?
   img3      String?
