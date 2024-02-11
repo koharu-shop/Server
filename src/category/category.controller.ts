@@ -3,7 +3,7 @@ import { CategoryService } from './category.service';
 
 @Controller('category')
 export class CategoryController {
-  private logger = new Logger('AdminController');
+  private logger = new Logger('CategoryController');
 
   constructor(private categoryService: CategoryService) {}
 

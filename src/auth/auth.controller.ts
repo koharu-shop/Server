@@ -4,7 +4,7 @@ import { LoginDto } from './dto/auth.dto';
 
 @Controller('auth')
 export class AuthController {
-  private logger = new Logger('AdminController');
+  private logger = new Logger('AuthController');
 
   constructor(private authService: AuthService) {}
 
