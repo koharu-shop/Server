@@ -35,6 +35,7 @@ model Member {
   Addresses Address[] // 일대다 관계
   Carts     Cart[]
   Orders    Order[]
+  Review    Review[]
 }
 
 // 고객 배송지 정보
@@ -98,6 +99,7 @@ model Product {
   Carts          Cart[]
   OrderDetails   OrderDetail[]
   ProductOptions ProductOption[]
+  Review         Review[]
 }
 
 // 상품옵션
@@ -112,6 +114,25 @@ model ProductOption {
   type          Int    @default(0) // 0 = 기분옵션, 1 = 추가옵션
   displayOption YNEnum @default(Y)
   name          String // ASCII코드 30으로 구분
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+
+  memberId Int
+  Member   Member @relation(fields: [memberId], references: [id])
+
+  score     Int
+  subject   String
+  content   String?
+  img1      String?
+  img2      String?
+  img3      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // 장바구니
