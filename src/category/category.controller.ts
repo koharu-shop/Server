@@ -7,11 +7,6 @@ export class CategoryController {
 
   constructor(private categoryService: CategoryService) {}
 
-  @Get(':id')
-  getProducts(@Param('id') id: number) {
-    return this.categoryService.getProducts(id);
-  }
-
   @Get()
   getCategories() {
     this.logger.verbose('get categories');
