@@ -7,32 +7,20 @@ export class ReviewService {
   constructor(private prismaService: PrismaService) {}
 
   async addReview(dto: CreateReviewDto, userId: number) {
-    try {
-      const newReview = await this.prismaService.review.create({
-        data: { ...dto, memberId: userId },
-      });
+    const review = await this.prismaService.review.create({
+      data: { ...dto, memberId: userId },
+    });
 
-      return newReview;
-    } catch (error) {
-      console.log(error);
-
-      throw new Error('An unexpected error occurred.');
-    }
+    return review;
   }
 
   async getReview(id: number) {
-    try {
-      const review = await this.prismaService.review.findMany({
-        where: {
-          productId: id,
-        },
-      });
+    const review = await this.prismaService.review.findMany({
+      where: {
+        productId: id,
+      },
+    });
 
-      return review;
-    } catch (error) {
-      console.log(error);
-
-      throw new Error('An unexpected error occurred.');
-    }
+    return review;
   }
 }
