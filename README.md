@@ -2,6 +2,10 @@
 
 소품 쇼핑몰
 
+## API 문서
+
+https://slash-wrist-723.notion.site/API-603b691ffbfc4511b5c01b366cea2dff
+
 ## 기술 스택
 
 ### Frontend
